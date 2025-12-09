@@ -136,7 +136,8 @@ async function salvarOperacao() {
     id_funcionario: formData.get('id_funcionario'),
     tipo: formData.get('tipo') // ← novo campo
   };
-  console.log(produto)
+  
+  
   try {
     let response = null;
 

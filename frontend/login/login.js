@@ -14,7 +14,7 @@ async function verificarEmail() {
 
     const data = await response.json();
     console.log("Resposta do servidor sobre verificar o email: "+data.nome + " - " + data.status);
-
+    
     if (data.status === 'existe') {
         document.getElementById("loginFrame").style.display = "none";
         document.getElementById("senhaFrame").style.display = "block";
@@ -37,12 +37,13 @@ async function verificarSenha() {
         body: JSON.stringify({ email: emailGlobal, senha }),
         credentials: 'include'
     });
+    //console.log("RESRESRESRESRESRES",res)
 
 
     const data = await res.json();
-    console.log("verificarSenha -> Resposta do servidor: " + JSON.stringify(data));
+    //console.log("verificarSenha -> Resposta do servidor: " + JSON.stringify(data));
    
-
+    
     if (data.status === 'ok') {
        // alert("Login bem-sucedido! Bem-vindo, " + data.nome);
         window.location.href = API_BASE_URL + "/menu.html";

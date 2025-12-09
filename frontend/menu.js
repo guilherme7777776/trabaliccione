@@ -23,16 +23,20 @@ function handleUserAction(action) {
 
 async function logout() {
   try {
-    const res = await fetch(API_BASE_URL + '/login/logout', {
-      credentials: 'include'
+    const res = await fetch(`${API_BASE_URL}/login/logout`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: { "Content-Type": "application/json" }
     });
 
     const data = await res.json();
 
     if (data.status === 'ok') {
+      // Sessão destruída
       window.location.href = "./login/login.html";
       return true;
     } else {
+      console.warn("Logout falhou no backend:", data);
       window.location.href = "./login/login.html";
       return false;
     }
@@ -43,6 +47,7 @@ async function logout() {
     return false;
   }
 }
+
 
 async function verificarAutorizacao() {
   try {
