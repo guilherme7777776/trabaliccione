@@ -1,7 +1,15 @@
 const { query } = require('../database');
 const path = require('path');
 
-const cadastrar = async (req, res) => {
+exports.abrirCadastro= (req, res) => {
+  console.log('Rota abrirCrudcargo acessada');
+  
+  res.sendFile(path.join(__dirname, '../../frontend/cadastro/cadastro.html'));
+ 
+};
+
+
+exports.cadastrar = async (req, res) => {
     try {
         const {
             nome,
@@ -72,5 +80,3 @@ const cadastrar = async (req, res) => {
         });
     }
 };
-
-module.exports = { cadastrar };

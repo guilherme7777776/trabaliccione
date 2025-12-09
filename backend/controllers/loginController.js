@@ -1,6 +1,4 @@
 const db = require('../database.js');
-
-
 const path = require('path');
 
 exports.abrirTelaLogin = (req, res) => {
@@ -40,7 +38,7 @@ exports.verificaSeUsuarioEstaLogado = (req, res) => {
 
   // Se o cookie 'usuario' existe (o valor é uma string/nome do usuário)
   if (usuario) {
-    console.log('loginController -> verificaSeUsuarioEstaLogado - Usuário está logado:', usuario);
+    //console.log('loginController -> verificaSeUsuarioEstaLogado - Usuário está logado:', usuario);
     // Usuário está logado. Retorna 'ok' e os dados do usuário.
     // É importante garantir que o valor do cookie 'usuarioLogado' seja o nome/ID do usuário.
     res.json({
@@ -179,14 +177,15 @@ exports.verificarSenha = async (req, res) => {
 
 // Logout
 exports.logout = (req, res) => {
+  console.log("chegou nop logout")
   res.clearCookie('usuarioLogado', {
     sameSite: 'None',
     secure: true,
     httpOnly: true,
     path: '/',
   });
-  console.log("Cookie 'usuarioLogado' removido com sucesso");
-  res.json({ status: 'deslogado' });
+  return res.status(200).send({ message: 'Logout realizado com sucesso' });
+  
 }
 
 

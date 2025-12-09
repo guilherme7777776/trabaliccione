@@ -75,7 +75,7 @@ app.use((err, req, res, next) => {
 
 
 const cadastroRoutes = require('./routes/cadastroRoutes'); 
-app.use('/', cadastroRoutes); // Rota /upload-image
+app.use('/cadastro', cadastroRoutes);
 
 const relatorioRoutes = require('./routes/relatorioRoutes'); 
 app.use('/relatorio', relatorioRoutes);

@@ -110,7 +110,7 @@ const viewImage = async (req, res) => {
     } catch (error) {
         await fs.access(placeholderfilePath);
         res.sendFile(placeholderfilePath);
-        console.error(`Arquivo ${filename} não encontrado:`, error.message);
+       
         // Se o arquivo não existir, retorna 404
       
     }

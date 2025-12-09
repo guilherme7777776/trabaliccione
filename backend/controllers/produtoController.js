@@ -1,9 +1,9 @@
 const { query } = require('../database');
 const path = require('path');
 
-console.log("VEJA A REPETIÇÃO DO RENDERIZAR TABELA PRODUTO")
+
 exports.abrirCrudProduto = (req, res) => {
-  console.log("abrir  crud")
+
   if (usuario) {
     res.sendFile(path.join(__dirname, '../../frontend/produto/produto.html'));   
   } else {
@@ -30,7 +30,7 @@ exports.listarProdutos = async (req, res) => {
       ORDER BY p.id_produto;
 
     `);
-    console.log("res:",result)
+ 
     res.json(result.rows);
   } catch (error) {
     console.error('Erro ao listar produtos:', error);
