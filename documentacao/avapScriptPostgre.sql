@@ -127,9 +127,9 @@ CREATE TABLE PAGAMENTO_HAS_FORMA_PAGAMENTO (
 
 INSERT INTO PESSOA (id_pessoa, nome_pessoa, email_pessoa, senha_pessoa, endereco_pessoa, telefone_pessoa, data_nascimento) VALUES
 (1, 'João Silva', 'joao@empresa.com', 'senha123', 'Rua A, 10', '99990001', '1985-05-10'),
-(2, 'Maria Santos', 'maria@empresa.com', 'senha456', 'Rua B, 20', '99990002', '1990-07-15'),
+(2, 'Kiko Loureiro', 'kikoloureiro@gmail.com', 'senha', 'Rua B, 20', '99990002', '1990-07-15'),
 (3, 'Carlos Lima', 'carlos@empresa.com', 'senha789', 'Rua C, 30', '99990003', '1988-03-22'),
-(4, 'Ana Pereira', 'ana@cliente.com', 'senha111', 'Rua D, 40', '88880001', '1992-02-20'),
+(4, 'Cliente da silva', 'cliente@cliente.com', 'senha', 'Rua D, 40', '88880001', '1992-02-20'),
 (5, 'Bruno Costa', 'bruno@cliente.com', 'senha222', 'Rua E, 50', '88880002', '1987-11-05'),
 (6, 'Carla Rocha', 'carla@cliente.com', 'senha333', 'Rua F, 60', '88880003', '1995-08-30'),
 (7, 'Fabio Souza', 'fabio@empresa.com', 'senha321', 'Rua G, 70', '99990004', '1983-01-05'),
@@ -137,10 +137,10 @@ INSERT INTO PESSOA (id_pessoa, nome_pessoa, email_pessoa, senha_pessoa, endereco
 (9, 'Helena Martins', 'helena@empresa.com', 'senha987', 'Rua I, 90', '99990006', '1987-12-20'),
 (10, 'Igor Campos', 'igor@empresa.com', 'senha159', 'Rua J, 100', '99990007', '1986-06-25');
 
-INSERT INTO CARGO (nome_cargo) VALUES
-('Vendedor'),
-('Gerente'),
-('Caixa');
+INSERT INTO CARGO (id_cargo,nome_cargo) VALUES
+(1,'Vendedor'),
+(2,'Gerente'),
+(3,'Caixa');
 
 INSERT INTO FUNCIONARIO (id_pessoa, salario_funcionario, carga_horaria, comissao, id_cargo) VALUES
 (1, 3000.00, 44.0, 300.00, 1),

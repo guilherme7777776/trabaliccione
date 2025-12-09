@@ -3,26 +3,31 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Menu Principal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>musichop - Menu Principal</title>
   <link rel="stylesheet" href="menu.css">
 </head>
 
 <body>
   <header>
     <div class="topo">
-      <h3>Menu Principal</h3>
-      <select id="oUsuario" onchange="handleUserAction(this.value)">
-        <option value="">usuario</option>
-        <option value="gerenciar-conta">Gerenciar Conta</option>
-        <option value="sair">Sair</option>
-      </select>
+      <h1 class="header-titulo">musichop - Menu Principal</h1>
+
+      <div class="usuario-area">
+        <select id="oUsuario" aria-label="Ações do usuário" onchange="handleUserAction(this.value)">
+          <option value="">Usuário</option>
+          <option value="sair">Sair</option>
+        </select>
+      </div>
     </div>
 
-    <nav class="nav">
-      <ul class="nav__menu">
+    <nav class="nav" aria-label="Navegação Principal do Site">
+
+      <ul class="nav__menu" role="menu">
         <li class="nav__menu-item"><a href="#">Home</a></li>
 
-        <li class="nav__menu-item">
+        
+        <li id="itemMenuCadastros" class="nav__menu-item">
           <a href="#">Cadastros</a>
           <ul class="nav__submenu">
             <li class="nav__submenu-item"><a href="http://localhost:3001/pessoa/abrirCrudPessoa">Pessoa</a></li>
@@ -38,28 +43,41 @@
           <ul class="nav__submenu">
             <li class="nav__submenu-item"><a href="#">Our Company</a></li>
             <li class="nav__submenu-item"><a href="#">Our Team</a></li>
-            <li class="nav__submenu-item"><a href="#">Our Reach</a></li>
+            <li class="nav__submenu-item"><a href="http://localhost:3001/cargo/abrirCrudCargo">Relatorios</a></li>
           </ul>
         </li>
 
         <li class="nav__menu-item"><a href="#">Blog</a></li>
         <li class="nav__menu-item"><a href="#">Contact</a></li>
-
       </ul>
+
+      <button id="btnVerCarrinho" class="btn-ver-carrinho"
+        onclick="window.location.href='http://localhost:3001/login/visaoclientecarrinho'"
+        aria-label="Ver Carrinho de Compras">
+        🛒 Ver Carrinho (<span id="contadorCarrinho">0</span>)
+      </button>
+
     </nav>
   </header>
 
+  <div id="messageContainer" class="message-container"></div>
+  
   <main>
+    <div class="carrossel-container">
+      <button id="prev-btn" class="nav-btn prev" aria-label="Anterior">&lt;</button>
 
-    <section>
-      <p>section main....</p>
-    </section>
+      <div id="carrossel-wrapper" class="carrossel-wrapper">
+        <div class="mensagem-info">Carregando produtos...</div>
+      </div>
 
+      <button id="next-btn" class="nav-btn next" aria-label="Próximo">&gt;</button>
+    </div>
   </main>
 
   <footer>
     <p>&copy; 2025 - Meu Site</p>
   </footer>
+ 
 
   <script src="./menu.js"></script>
 
