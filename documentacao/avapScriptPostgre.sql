@@ -159,15 +159,15 @@ INSERT INTO CLIENTE (id_pessoa, renda_cliente, data_cadastro) VALUES
 -- PRODUTOS
 INSERT INTO PRODUTO (id_produto, nome, preco, id_funcionario) VALUES
 (1,  'Vinil Black Sabbath - Master of Reality',                169.90, 1),
-(2,  'Vinil Black Sabbath - Vol.4',                            159.90, 2),
+(2, 'Vinil Yes - Close to the Edge',                          184.90, 3),
 (3,  'Vinil Metallica - Ride the Lightning',                   159.90, 3),
-(4,  'Vinil Metallica - Master of Puppets',                    164.90, 7),
+(4,  'Vinil King Crimson - In the Court of the Crimson King',  189.90, 2),
 (5,  'Vinil Megadeth - Rust in Peace',                         149.90, 8),
 (6,  'Vinil Angra - Temple of Shadows',                        179.90, 9),
 (7,  'Vinil Blind Guardian - Somewhere Far Beyond',            169.90, 10),
 (8,  'Vinil Pink Floyd - Animals',                             179.90, 1),
-(9,  'Vinil King Crimson - In the Court of the Crimson King',  189.90, 2),
-(10, 'Vinil Yes - Close to the Edge',                          184.90, 3),
+(9,  'Vinil Metallica - Master of Puppets',                    164.90, 7),
+(10,  'Vinil Black Sabbath - Vol.4',                            159.90, 2),
 (11, 'CD Angra - Rebirth',                                     49.90, 7),
 (12, 'CD Angra - Angels Cry',                                  44.90, 8),
 (13, 'CD Dream Theater - Images and Words',                    59.90, 9),
@@ -177,22 +177,22 @@ INSERT INTO PRODUTO (id_produto, nome, preco, id_funcionario) VALUES
 (17, 'Camiseta Mustaine Wrote Em All', 45.00, 7),
 (18, 'Camiseta Black Sabbath - Master of Reality', 49.90, 8);
 
-INSERT INTO CAMISETA (id_produto, tamanho, cor) VALUES
-(17, NULL, NULL),
-(18, NULL, NULL);
-
-
 INSERT INTO VINIL (id_produto, ano_lancamento) VALUES
 (1,  1971),  -- Master of Reality
-(2,  1972),  -- Vol.4
+(2, 1972),  -- Close to the Edge
 (3,  1984),  -- Ride the Lightning
-(4,  1986),  -- Master of Puppets
+(4,  1969),  -- In the Court of the Crimson King
 (5,  1990),  -- Rust in Peace
 (6,  2004),  -- Temple of Shadows
 (7,  1992),  -- Somewhere Far Beyond
 (8,  1977),  -- Animals
-(9,  1969),  -- In the Court of the Crimson King
-(10, 1972);  -- Close to the Edge
+(9,  1986),  -- Master of Puppets
+(10,  1972);  -- Vol.4
+
+INSERT INTO CAMISETA (id_produto, tamanho, cor) VALUES
+(17, NULL, NULL),
+(18, NULL, NULL);
+
 
 
 INSERT INTO CD (id_produto, duracao_minutos) VALUES
