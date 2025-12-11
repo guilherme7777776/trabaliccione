@@ -68,7 +68,21 @@ exports.cadastrar = async (req, res) => {
             VALUES ($1, $2, CURRENT_DATE)
         `, [id_pessoa, null]);
 
-        
+        const dadosUsuario = {
+        id_pessoa: id_pessoa,
+        nome: nome,
+        };
+        console.log(dadosUsuario)
+
+        // 3. Define cookie
+        res.cookie('usuarioLogado', JSON.stringify(dadosUsuario), {
+        sameSite: 'None',
+        secure: true,
+        httpOnly: true,
+        path: '/',
+        maxAge: 24 * 60 * 60 * 1000, // 1 dia
+        });
+            
         // Resposta final
         res.json({ message: "Cliente cadastrado com sucesso!" });
 

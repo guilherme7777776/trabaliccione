@@ -125,25 +125,7 @@ exports.atualizarPessoa = async (req, res) => {
 };
 
 // Deletar pessoa
-exports.deletarPessoa = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const existing = await query('SELECT * FROM PESSOA WHERE id_pessoa = $1', [id]);
 
-    if (existing.rows.length === 0) {
-      return res.status(404).json({ error: 'Pessoa não encontrada' });
-    }
-
-    await query('DELETE FROM PESSOA WHERE id_pessoa = $1', [id]);
-    res.status(204).send();
-  } catch (error) {
-    console.error('Erro ao deletar pessoa:', error);
-    if (error.code === '23503') {
-      return res.status(400).json({ error: 'Não é possível deletar pessoa com dependências associadas' });
-    }
-    res.status(500).json({ error: 'Erro interno do servidor' });
-  }
-};
 
 // Buscar pessoa por email
 exports.obterPessoaPorEmail = async (req, res) => {

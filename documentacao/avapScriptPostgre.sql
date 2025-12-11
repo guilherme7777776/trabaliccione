@@ -158,32 +158,52 @@ INSERT INTO CLIENTE (id_pessoa, renda_cliente, data_cadastro) VALUES
 
 -- PRODUTOS
 INSERT INTO PRODUTO (id_produto, nome, preco, id_funcionario) VALUES
-(1, 'Camiseta Iron Maiden - The Trooper', 89.90, 1),
-(2, 'Vinil Metallica - Master of Puppets', 149.90, 2),
-(3, 'CD Angra - Rebirth', 54.90, 1),
-(4, 'Camiseta Pink Floyd - Dark Side of the Moon', 99.90, 2),
-(5, 'Vinil Queen - A Night at the Opera', 159.90, 3),
-(6, 'CD Dream Theater - Images and Words', 59.90, 1),
-(7, 'Camiseta Led Zeppelin - IV', 84.90, 2),
-(8, 'Vinil Nirvana - Nevermind', 139.90, 3),
-(9, 'CD Rush - Moving Pictures', 49.90, 1),
-(10, 'Camiseta AC/DC - Back in Black', 89.90, 2);
+(1,  'Vinil Black Sabbath - Master of Reality',                169.90, 1),
+(2,  'Vinil Black Sabbath - Vol.4',                            159.90, 2),
+(3,  'Vinil Metallica - Ride the Lightning',                   159.90, 3),
+(4,  'Vinil Metallica - Master of Puppets',                    164.90, 7),
+(5,  'Vinil Megadeth - Rust in Peace',                         149.90, 8),
+(6,  'Vinil Angra - Temple of Shadows',                        179.90, 9),
+(7,  'Vinil Blind Guardian - Somewhere Far Beyond',            169.90, 10),
+(8,  'Vinil Pink Floyd - Animals',                             179.90, 1),
+(9,  'Vinil King Crimson - In the Court of the Crimson King',  189.90, 2),
+(10, 'Vinil Yes - Close to the Edge',                          184.90, 3),
+(11, 'CD Angra - Rebirth',                                     49.90, 7),
+(12, 'CD Angra - Angels Cry',                                  44.90, 8),
+(13, 'CD Dream Theater - Images and Words',                    59.90, 9),
+(14, 'CD Dream Theater - Metropolis Pt.2',                     64.90, 10),
+(15, 'CD Black Sabbath - Heaven and Hell',                     57.90, 1),
+(16, 'CD Megadeth - Peace Sells... But Who s Buying?',        52.90, 2),
+(17, 'Camiseta Mustaine Wrote Em All', 45.00, 7),
+(18, 'Camiseta Black Sabbath - Master of Reality', 49.90, 8);
 
 INSERT INTO CAMISETA (id_produto, tamanho, cor) VALUES
-(1, 'M', 'Preto'),
-(4, 'G', 'Preto'),
-(7, 'M', 'Branco'),
-(10, 'G', 'Preto');
+(17, NULL, NULL),
+(18, NULL, NULL);
+
 
 INSERT INTO VINIL (id_produto, ano_lancamento) VALUES
-(2, 1986),
-(5, 1975),
-(8, 1991);
+(1,  1971),  -- Master of Reality
+(2,  1972),  -- Vol.4
+(3,  1984),  -- Ride the Lightning
+(4,  1986),  -- Master of Puppets
+(5,  1990),  -- Rust in Peace
+(6,  2004),  -- Temple of Shadows
+(7,  1992),  -- Somewhere Far Beyond
+(8,  1977),  -- Animals
+(9,  1969),  -- In the Court of the Crimson King
+(10, 1972);  -- Close to the Edge
+
 
 INSERT INTO CD (id_produto, duracao_minutos) VALUES
-(3, 61),
-(6, 57),
-(9, 44);
+(11, 48),  -- Rebirth
+(12, 49),  -- Angels Cry
+(13, 57),  -- Images and Words
+(14, 75),  -- Metropolis Pt.2
+(15, 41),  -- Heaven and Hell
+(16, 36);  -- Peace Sells
+
+
 
 -- PEDIDOS
 INSERT INTO PEDIDO (id_funcionario, data_pedido, id_pessoa) VALUES

@@ -20,13 +20,10 @@ async function verificarEmail() {
         document.getElementById("senhaFrame").style.display = "block";
         document.getElementById("nomeUsuario").innerText = `Olá, ${data.nome}`;
     } else {
-        const cadastrar = confirm("E-mail não encontrado. Deseja se cadastrar?");
-        if (cadastrar) {
-            window.location.href = "../cadastro/cadastro.html";
-
-        }
+        alert(`Email nao encontrade`)
     }
 }
+
 
 async function verificarSenha() {
     const senha = document.getElementById("senha").value;

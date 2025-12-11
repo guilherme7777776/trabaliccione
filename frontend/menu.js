@@ -8,6 +8,7 @@ const nextBtn = document.getElementById('next-btn');
 const itemMenuCadastros = document.getElementById("itemMenuCadastros");
 window.onload = (atualizarContadorCarrinho)
 
+
 function mostrarMensagem(texto, tipo = 'info') {
   messageContainer.innerHTML = `<div class="message ${tipo}">${texto}</div>`;
   setTimeout(() => {
@@ -34,6 +35,7 @@ async function logout() {
     if (data.status === 'ok') {
       // Sessão destruída
       window.location.href = "./login/login.html";
+      
       return true;
     } else {
       console.warn("Logout falhou no backend:", data);
@@ -181,11 +183,13 @@ function renderizarProdutos(dados) {
     carrosselWrapper.innerHTML = `<div class="mensagem-info">Nenhum produto encontrado.</div>`;
     return;
   }
-
+   
   produtos.forEach(p => {
+    
     const card = criarCardProduto(p);
     carrosselWrapper.appendChild(card);
   });
+  
 
   document.querySelectorAll('.btn-carrinho').forEach(btn => {
     btn.addEventListener('click', e => adicionarAoCarrinho(e.target.dataset.produtoId));

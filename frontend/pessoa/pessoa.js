@@ -453,7 +453,7 @@ async function salvarOperacao() {
                     }
                 } else { //checkbox não marcado
                     // não pode estar na tabela cliente, remover se existir
-                    const respVerifCli = await fetch(caminhoCliente);
+                    //const respVerifCli = await fetch(caminhoCliente);
                    // console.log('Verificação cliente para possível exclusão, status:', respVerifCli.status);
                     // if (respVerifCli.status === 200) {
                     //     // existe, deletar
@@ -506,37 +506,82 @@ async function salvarOperacao() {
 
                 // tratar funcionario de forma similar a cliente
                 if (document.getElementById('checkboxFuncionario').checked) {
-                    // funcionario deve existir: verificar se existe
-                //    console.log('Verificando se funcionario existe para possível criação/alteração  ' + caminhoFunc);
-                //    console.log('Dados funcionario para possível criação/alteração:', funcionario);
-
+                    // cliente deve existir: verificar se existe
                     const respVerifFunc = await fetch(caminhoFunc);
+                    //const caminhoCliente2 = `${API_BASE_URL}/cliente/2`;
+                    //const respVerifCli2 = await fetch(caminhoCliente2);
+                    //console.log(`seq`,respVerifCli2)
+                    
                     if (respVerifFunc.status === 404) {
                         // não existe, criar
-                        const respCriarFunc = await fetch(`${API_BASE_URL}/funcionario/`, {
+                        const respCriarFunc = await fetch(`${API_BASE_URL}/funcionario`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(funcionario)
                         });
-                        if (!respCriarFunc.ok) console.warn('Erro ao criar funcionario no alterar', respCriarFunc.status);
-                    } else if (respVerifFunc.status === 200) {
+                        console.log(JSON.stringify(cliente));
+                        console.log(cliente);
+                        if (!respCriarCli.ok) console.warn('Erro ao criar cliente no criar', respCriarFunc.status);
+                    } else if (respVerifCli.status === 200) {
                         // já existe, alterar
-                        const respAlterarFunc = await fetch(caminhoFunc, {
+                        const respAlterarCli = await fetch(caminhoFunc, {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(funcionario)
                         });
-                        if (!respAlterarFunc.ok) console.warn('Erro ao alterar funcionario no alterar', respAlterarFunc.status);
+                        if (!respAlterarFunc.ok) console.warn('Erro ao alterar cliente no alterar', respAlterarFunc.status);
                     } else {
-                        console.warn('Erro ao verificar funcionario no alterar', respVerifFunc.status);
+                        console.warn('Erro ao verificar cliente no alterar', respVerifFunc.status);
                     }
                 } else { //checkbox não marcado
-                    //excluir se existir na tabela funcionario
-                    const respVerifFunc = await fetch(caminhoFunc);
-                    if (respVerifFunc.status === 200) {
-                        // existe, deletar
-                        const respDel = await fetch(caminhoFunc, { method: 'DELETE' });
-                        if (!respDel.ok) console.warn('Erro ao excluir funcionario no alterar', respDel.status);
+                    // não pode estar na tabela cliente, remover se existir
+                    //const respVerifCli = await fetch(caminhoCliente);
+                   // console.log('Verificação cliente para possível exclusão, status:', respVerifCli.status);
+                    // if (respVerifCli.status === 200) {
+                    //     // existe, deletar
+                    //     const respDel = await fetch(caminhoCliente, { method: 'DELETE' });
+                    //     if (!respDel.ok) console.warn('Erro ao excluir cliente no alterar', respDel.status);
+                    // }
+                  
+                    try {
+                        const respFunc = await fetch(caminhoFunc, {
+                            method: 'DELETE'
+                        });
+
+                        // 1. Cliente excluído com sucesso (Resposta 204 No Content)
+                        if (respFunc.status === 204) {
+                          
+                            // Opcional: Recarregar a lista de clientes ou remover o item da UI
+                            // Exemplo: recarregarListaClientes();
+                        }
+
+                        // 2. Erro: Cliente não encontrado (Resposta 404 Not Found)
+                        if (respFunc.status === 404) {
+                            // O backend envia um JSON com { error: 'Cliente não encontrado' }
+                            const data = await respCli.json();                           
+                        }
+
+                        // 3. Erro: Conflito de Foreign Key (Resposta 409 Conflict)
+                        if (respFunc.status === 409) {
+                            // O backend envia um JSON com a mensagem de erro detalhada
+                            const data = await respFunc.json();
+                            
+                            alert(data.error);
+                            document.getElementById('checkboxFuncionario').checked = true; // marcar novamente o checkbox
+                            
+                        }
+
+                        // 4. Erro: Erro interno do servidor (Resposta 500 Internal Server Error)
+                        if (respFunc.status === 500) {
+                            // O backend envia um JSON com { error: 'Erro interno do servidor...' }
+                            const data = await respFunc.json();
+                          
+                            alert(data.error);
+                        }
+
+                    } catch (error) {
+                        // Erros de rede ou outros problemas antes de receber uma resposta do servidor
+                        console.error('Erro de rede ao tentar deletar o cliente:', error);
                     }
                 }
 
@@ -554,7 +599,7 @@ async function salvarOperacao() {
 
                 const respCli = await fetch(caminhoCliente);
 
-                alert('Resposta ao obter cliente para possível exclusão: ' + respCli.status);
+              
 
                 if (respCli.status === 200) {
                     await fetch(caminhoCliente, { method: 'DELETE' });
@@ -565,13 +610,6 @@ async function salvarOperacao() {
                 const respFuncObter = await fetch(caminhoFunc);
                 if (respFuncObter.status === 200) {
                     await fetch(caminhoFunc, { method: 'DELETE' });
-                }
-
-                // excluir pessoa
-                const respDelPessoa = await fetch(`${API_BASE_URL}/pessoa/${currentPersonId}`, { method: 'DELETE' });
-                if (!respDelPessoa.ok) {
-                    const err = await respDelPessoa.json().catch(() => ({ error: 'erro' }));
-                    throw new Error('Erro ao excluir pessoa: ' + (err.error || respDelPessoa.status));
                 }
 
                 mostrarMensagem('Pessoa excluída com sucesso!', 'success');

@@ -10,12 +10,14 @@ form.addEventListener("submit", async (e) => {
 
     const dados = Object.fromEntries(new FormData(form));
 
-    const response = await fetch(`${API_BASE_URL}/cadastrar`, {
+    const response = await fetch(`${API_BASE_URL}/cadastro/cadastrar`, {
     method: 'POST',
     credentials: 'include',
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(dados),
     });
+
+    
     
     const json = await response.json();
     msg.textContent = json.message;
