@@ -18,4 +18,6 @@ router.get('/', item_pedidoController.listaritem_pedido);
 router.get('/:idPedido', item_pedidoController.obterItensDeUmitem_pedido);
 router.post('/', item_pedidoController.criaritem_pedido);
 
+router.post('/lote', item_pedidoController.criarItensPedidoEmLote);
+
 module.exports = router;

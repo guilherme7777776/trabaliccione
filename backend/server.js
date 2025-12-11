@@ -110,6 +110,9 @@ app.use('/pedido', pedidoRoutes);
 const item_pedidoRoutes = require('./routes/item_pedidoRoutes');
 app.use('/item_pedido', item_pedidoRoutes);
 
+const pagamentoRoutes = require('./routes/pagamentoRoutes');
+app.use('/pagamento', pagamentoRoutes);
+
 
 
 

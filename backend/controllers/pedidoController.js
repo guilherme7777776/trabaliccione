@@ -17,7 +17,7 @@ exports.abrirCrudPedido = (req, res) => {
 
 exports.listarPedidos = async (req, res) => {
   try {
-    const result = await query('SELECT * FROM P ORDER PEDIDO');
+    const result = await query('SELECT * FROM PEDIDO ORDER BY id_pedido');
     //  console.log('Resultado do SELECT:', result.rows);//verifica se está retornando algo
     res.json(result.rows);
   } catch (error) {
@@ -147,6 +147,47 @@ exports.deletarPedido = async (req, res) => {
         error: 'Não é possível deletar pedido com dependências associadas'
       });
     }
+
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+}
+
+// FUNÇÃO 2: CRIAR PEDIDO ONLINE (E-COMMERCE - Utiliza CPF de Funcionário Padrão)
+exports.criarPedidoOnline = async (req, res) => {
+  console.log('Criando pedido ONLINE com dados:', req.body);
+  const id_funcionario = '00000000000'; // CPF default para pedidos online (deve existir no banco)
+  
+  try {
+    const { data_pedido, id_pessoa } = req.body;
+
+    // CORREÇÃO: Usamos o keyword DEFAULT para que o PostgreSQL force o uso da sequência (autoincremento).
+    const sql = 'INSERT INTO PEDIDO (id_pedido, data_pedido, id_funcionario, id_pessoa) VALUES (DEFAULT, $1, $2, $3) RETURNING *';
+
+    console.log('SQL a ser executado:', sql);
+
+    const result = await query(
+      sql,  [data_pedido, id_pessoa, id_funcionario]
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error('Erro ao criar pedido (online):', error);
+
+    // Verifica se é erro de violação de constraint NOT NULL
+    if (error.code === '23502') {
+      return res.status(400).json({
+        error: 'Dados obrigatórios não fornecidos'
+      });
+    }
+    
+    // IMPORTANTE: Se o CPF default não existir na tabela 'funcionario', 
+    // o erro '23503' (Foreign Key Violation) será lançado aqui.
+    if (error.code === '23503') {
+      return res.status(400).json({
+        error: `CPF de funcionário padrão (${id_funcionario}) não encontrado. Certifique-se de que ele existe na tabela 'funcionario'.`
+      });
+    }
+
 
     res.status(500).json({ error: 'Erro interno do servidor' });
   }
