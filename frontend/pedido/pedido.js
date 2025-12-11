@@ -411,7 +411,7 @@ async function selecionarPedido(id) {
 // Função para adicionar uma nova linha vazia para um item na tabela de itens do pedido.
 function adicionarItem() {
     const itensTableBody = document.getElementById('itensTableBody');
-
+    console.log("abuble",itensTableBody)
     const row = document.createElement('tr');
     row.innerHTML = `
         <td>
@@ -469,7 +469,7 @@ async function buscarProdutoPorId(button) {
 
 
         const precoInput = row.querySelector('.preco-input');
-        precoInput.value = produto.preco_unitario;
+        precoInput.value = produto.preco;
 
         const nomeInput = row.querySelector('td:nth-child(3) span');
         nomeInput.innerHTML = produto.nome;

@@ -94,6 +94,6 @@ function finalizarPedido() {
    
 }
 
-document.getElementById('btn-finalizar').addEventListener('click', finalizarPedido);
+
 document.getElementById('btn-limpar').addEventListener('click', limparCarrinho);
 window.onload = carregarCarrinho;

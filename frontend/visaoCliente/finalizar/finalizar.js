@@ -96,87 +96,78 @@ async function enviarDadosParaBD() {
         return;
     }
 
-    // Monta o pedido
+    // ---- 1) CRIAR PEDIDO ----
     const pedido = {
-        data_pedido: new Date().toISOString(),
-        cliente_pessoa_cpf_pessoa: '1', // substitua pelo CPF real do cliente logado
-        itens: carrinho.map(item => ({
-            id_produto: item.id || item.codigo,
-            preco: item.preco
-        }))
+        id_funcionario: 1,
+        data_pedido: new Date().toISOString().slice(0, 10),
+        id_pessoa: 1
     };
+
+    let dados;
 
     try {
         const resposta = await fetch('http://localhost:3001/pedido/online', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(pedido)
+            body: JSON.stringify(pedido)  
         });
+        console.log(resposta,pedido)
+        if (!resposta.ok) {
+            throw new Error(await resposta.text());
+        }
 
-        if (!resposta.ok) throw new Error('Falha ao criar pedido na API.');
+        dados = await resposta.json();
+        const idPedido = dados.id_pedido;
 
-        const dados = await resposta.json();
+        console.log("Pedido criado:", idPedido);
 
-        console.log('✅ Pedido enviado:', pedido);
-        // MUDANÇA: Conteúdo do sessionStorage antes de limpar
-        console.log('Conteúdo do sessionStorage antes de limpar:', sessionStorage);
+        // ---- 2) PREPARAR ITENS ----
+        const dadosItensDoPedido = carrinho.map(item => ({
+            pedido_id_pedido: idPedido,
+            produto_id_produto: item.id || item.codigo,
+            quantidade: item.quantidade || 1,
+            preco_unitario: item.preco,
 
-        // MUDANÇA: Passando sessionStorage
-        let dadosItensDoPedido = obterCarrinhoDoStorage(dados.id_pedido, sessionStorage);
-        console.log('Conteúdo do carrinho obtido do sessionStorage:', dadosItensDoPedido);
+        }));
 
+        console.log("Itens preparados:", dadosItensDoPedido);
 
-        const rotaLote = 'http://localhost:3001/pedido_has_produto/lote'; // A rota que enviatrá os itens do pedido para tabela pedido_has_produto
+        // ---- 3) ENVIAR ITENS PARA /item_produto/lote ----
+        const rota = 'http://localhost:3001/item_pedido/lote';
 
-        fetch(rotaLote, {
+        const respItens = await fetch(rota, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(dadosItensDoPedido),
-        })
-            .then(response => {
-                if (!response.ok) {
-                    // Lida com erros HTTP (400, 409, 500, etc.)
-                    return response.json().then(errorData => {
-                        throw new Error(errorData.error || `Erro HTTP: ${response.status}`);
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Itens inseridos com sucesso:', data);
-            })
-            .catch(error => {
-                console.error('Falha na inserção em lote:', error.message);
-            });
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dadosItensDoPedido)
+        });
+        console.log(respItens)
+        if (!respItens.ok) {
+            throw new Error(await respItens.text());
+        }
 
+        console.log("Itens inseridos com sucesso");
 
-
-
-        //adicionar no alert os itens do pedido
+        // ---- 4) ALERT ----
         let aux = "";
         dadosItensDoPedido.forEach(item => {
-            aux += `\n- ${dados.id_pedido} -  Produto: ${item.nome}, Preço: R$ ${item.preco.toFixed(2)}`;
+            aux += `\n- Produto: ${item.nome} - R$ ${item.preco.toFixed(2)}`;
         });
 
-        alert(`Pedido ${dados.id_pedido} \n\n` + aux);
+        alert(`Pedido ${idPedido} finalizado:\n${aux}`);
 
-        //json para pagamento
+        // ---- 5) PAGAMENTO ----
         const dadosPagamento = {
-            id_pedido: dados.id_pedido,
-            valor_total: valorTotal          
+            id_pedido: idPedido,
+            valor_total: valorTotal  
         };
 
         sessionStorage.setItem('dadosPagamento', JSON.stringify(dadosPagamento));
 
-        
-        // sessionStorage.removeItem('carrinho');
         window.location.href = 'http://localhost:3001/pagamento/abrirTelaPagamento';
 
     } catch (erro) {
         console.error('❌ Erro ao enviar pedido:', erro);
-        alert('Ocorreu um erro ao finalizar o pedido. Tente novamente.');
+        alert('Ocorreu um erro ao finalizar o pedido. Veja o console.');
     }
 }
 

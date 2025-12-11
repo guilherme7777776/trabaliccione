@@ -126,8 +126,9 @@ CREATE TABLE PAGAMENTO_HAS_FORMA_PAGAMENTO (
 -- ========================
 
 INSERT INTO PESSOA (id_pessoa, nome_pessoa, email_pessoa, senha_pessoa, endereco_pessoa, telefone_pessoa, data_nascimento) VALUES
-(1, 'João Silva', 'joao@empresa.com', 'senha123', 'Rua A, 10', '99990001', '1985-05-10'),
-(2, 'Kiko Loureiro', 'kikoloureiro@gmail.com', 'senha', 'Rua B, 20', '99990002', '1990-07-15'),
+(0, 'online', 'online@gmail.com', 'abc123','Loja', '00000000', '1900-01-01' ),
+(1, 'João Silva', 'joao@empresa.com', 'senha123', 'Rua das magnolias', '99990001', '1985-05-10'),
+(2, 'Kiko Loureiro', 'kikoloureiro@gmail.com', 'senha', 'Rua Vivara Grande', '99990002', '1990-07-15'),
 (3, 'Carlos Lima', 'carlos@empresa.com', 'senha789', 'Rua C, 30', '99990003', '1988-03-22'),
 (4, 'Cliente da silva', 'cliente@cliente.com', 'senha', 'Rua D, 40', '88880001', '1992-02-20'),
 (5, 'Bruno Costa', 'bruno@cliente.com', 'senha222', 'Rua E, 50', '88880002', '1987-11-05'),
@@ -143,6 +144,7 @@ INSERT INTO CARGO (id_cargo,nome_cargo) VALUES
 (3,'Caixa');
 
 INSERT INTO FUNCIONARIO (id_pessoa, salario_funcionario, carga_horaria, comissao, id_cargo) VALUES
+(0,0,1,0,1),
 (1, 3000.00, 44.0, 300.00, 1),
 (2, 4000.00, 40.0, 400.00, 2),
 (3, 2500.00, 36.0, 250.00, 1),
@@ -260,3 +262,8 @@ INSERT INTO PAGAMENTO_HAS_FORMA_PAGAMENTO (id_pagamento, id_forma_pagamento, val
 (6, 3, 303.70),
 (7, 1, 339.70),
 (8, 4, 228.80);
+
+
+SELECT IP.pedido_id_pedido , IP.produto_id_produto , nome , IP.quantidade , IP.preco_unitario
+FROM ITEM_PEDIDO IP, PRODUTO P
+WHERE IP.pedido_id_pedido = 3 and  IP.produto_id_produto = P.id_produto ORDER BY IP.produto_id_produto;
